@@ -34,6 +34,11 @@ if __name__ == "__main__":
     parser.add_argument(
         "--retries", type=int, help="retries", default=3,
     )
+    parser.add_argument(
+        "--verbose", help="verbose", action='store_true', default=False,
+    )
 
     args = parser.parse_args()
+    if args.verbose:
+        logger.setLevel(logging.DEBUG)
     sys.exit(execute.retry_with(stop=stop_after_attempt(args.retries))(args.cmd))
